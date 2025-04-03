@@ -55,3 +55,24 @@ async def update_album(album_nome: str, album_atualizado: dict):
             discografia_megadeth[i] = album_atualizado
             return {"message": f"Álbum '{album_nome}' atualizado com sucesso", "album": album_atualizado}
     return {"message": f"Álbum '{album_nome}' não encontrado"}
+
+@app.get("/album_detalhes/{album_nome}")
+async def get_album_details(album_nome: str):
+    for album in discografia_megadeth:
+        if album["album"] == album_nome:
+            return album
+    return {"message": f"Álbum '{album_nome}' não encontrado"}
+
+@app.get("/albuns_por_intervalo/")
+async def get_albums_by_year_range(ano_inicio: int = Query(..., description="Ano de início do intervalo"), ano_fim: int = Query(..., description="Ano de fim do intervalo")):
+    filtered_albums = [album for album in discografia_megadeth if ano_inicio <= album["ano"] <= ano_fim]
+    if filtered_albums:
+        return filtered_albums
+    return {"message": f"Nenhum álbum encontrado no intervalo de anos {ano_inicio} - {ano_fim}"}
+
+@app.get("/destaque/{album_nome}")
+async def get_destaque_album(album_nome: str):
+    for album in discografia_megadeth:
+        if album["album"] == album_nome:
+            return {"destaque": album["destaque"]}
+    return {"message": f"Álbum '{album_nome}' não encontrado"}
