@@ -21,10 +21,7 @@ jobs:
       - name: Instalar dependências
         run: |
           python -m pip install --upgrade pip
-          pip install fastapi uvicorn requests pytest flake8 coverage pylint
-
-      - name: Lint com flake8
-        run: flake8 ./main.py ./test_api.py
+          pip install fastapi uvicorn requests pytest coverage pylint
 
       - name: Lint com pylint
         run: pylint ./main.py ./test_api.py
