@@ -1,17 +1,41 @@
-name: Continuous Integration FastApi Megadeth
+name: CI FastAPI Megadeth
+
 on:
+  push:
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
+      - name: Checkout código do repositório
+        uses: actions/checkout@v3
 
-      - name: Python Lint Code Scanning Action
-        uses: advanced-security/python-lint-code-scanning-action@latest # or a specific version
+      - name: Configurar Python 3.9
+        uses: actions/setup-python@v4
         with:
-          linter: pylint
+          python-version: 3.9
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install fastapi uvicorn requests pytest flake8 coverage pylint
+
+      - name: Lint com flake8
+        run: flake8 ./main.py ./test_api.py
+
+      - name: Lint com pylint
+        run: pylint ./main.py ./test_api.py
+
+      - name: Executar testes com cobertura
+        run: |
+          coverage run -m pytest
+          coverage xml
+
+      - name: Upload cobertura para Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          flags: unittests
+          fail_ci_if_error: true
