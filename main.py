@@ -1,5 +1,5 @@
-from fastapi import FastAPI
-from typing import List
+from fastapi import FastAPI, Query
+from typing import List, Optional
 
 app = FastAPI()
 
@@ -28,3 +28,30 @@ async def read_musicas(album: str):
         if disco["album"] == album:
             return {"musicas": disco["musicas"]}
     return {"message": "Album não encontrado"}
+
+@app.get("/albuns/")
+async def filter_albums_by_year(ano: int = Query(..., description="Ano de lançamento do álbum")):
+    filtered_albums = [album for album in discografia_megadeth if album["ano"] == ano]
+    if filtered_albums:
+        return filtered_albums
+    return {"message": f"Nenhum álbum encontrado para o ano {ano}"}
+
+@app.get("/busca/")
+async def search_albums_by_keyword(keyword: str = Query(..., description="Palavra-chave no título do álbum")):
+    filtered_albums = [album for album in discografia_megadeth if keyword.lower() in album["album"].lower()]
+    if filtered_albums:
+        return filtered_albums
+    return {"message": f"Nenhum álbum encontrado com a palavra-chave '{keyword}'"}
+
+@app.post("/album/")
+async def create_album(album: dict):
+    discografia_megadeth.append(album)
+    return {"message": "Álbum adicionado com sucesso", "album": album}
+
+@app.put("/album/{album_nome}")
+async def update_album(album_nome: str, album_atualizado: dict):
+    for i, album in enumerate(discografia_megadeth):
+        if album["album"] == album_nome:
+            discografia_megadeth[i] = album_atualizado
+            return {"message": f"Álbum '{album_nome}' atualizado com sucesso", "album": album_atualizado}
+    return {"message": f"Álbum '{album_nome}' não encontrado"}
