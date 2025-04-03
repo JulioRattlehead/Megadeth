@@ -51,7 +51,9 @@ async def read_musicas(album: str):
 async def filter_albums_by_year(ano: int = Query(...,
                                                description="Ano de lançamento do álbum")):
     """Filtra álbuns por ano de lançamento."""
-    filtered_albums = [album for album in discografia_megadeth if album["ano"] == ano]
+    filtered_albums = [
+        album for album in discografia_megadeth if album["ano"] == ano
+    ]
     if filtered_albums:
         return filtered_albums
     return {"message": f"Nenhum álbum encontrado para o ano {ano}"}
@@ -61,7 +63,10 @@ async def filter_albums_by_year(ano: int = Query(...,
 async def search_albums_by_keyword(keyword: str = Query(...,
                                                     description="Palavra-chave no título do álbum")):
     """Busca álbuns por palavra-chave no título."""
-    filtered_albums = [album for album in discografia_megadeth if keyword.lower() in album["album"].lower()]
+    filtered_albums = [
+        album for album in discografia_megadeth
+        if keyword.lower() in album["album"].lower()
+    ]
     if filtered_albums:
         return filtered_albums
     return {"message": f"Nenhum álbum encontrado com a palavra-chave '{keyword}'"}
@@ -80,8 +85,10 @@ async def update_album(album_nome: str, album_atualizado: dict):
     for i, album in enumerate(discografia_megadeth):
         if album["album"] == album_nome:
             discografia_megadeth[i] = album_atualizado
-            return {"message": f"Álbum '{album_nome}' atualizado com sucesso",
-                    "album": album_atualizado}
+            return {
+                "message": f"Álbum '{album_nome}' atualizado com sucesso",
+                "album": album_atualizado,
+            }
     return {"message": f"Álbum '{album_nome}' não encontrado"}
 
 
@@ -95,15 +102,21 @@ async def get_album_details(album_nome: str):
 
 
 @app.get("/albuns_por_intervalo/")
-async def get_albums_by_year_range(ano_inicio: int = Query(...,
-                                                       description="Ano de início do intervalo"),
-                                   ano_fim: int = Query(...,
-                                                     description="Ano de fim do intervalo")):
+async def get_albums_by_year_range(
+    ano_inicio: int = Query(..., description="Ano de início do intervalo"),
+    ano_fim: int = Query(..., description="Ano de fim do intervalo"),
+):
     """Retorna álbuns lançados em um intervalo de anos."""
-    filtered_albums = [album for album in discografia_megadeth if ano_inicio <= album["ano"] <= ano_fim]
+    filtered_albums = [
+        album
+        for album in discografia_megadeth
+        if ano_inicio <= album["ano"] <= ano_fim
+    ]
     if filtered_albums:
         return filtered_albums
-    return {"message": f"Nenhum álbum encontrado no intervalo de anos {ano_inicio} - {ano_fim}"}
+    return {
+        "message": f"Nenhum álbum encontrado no intervalo de anos {ano_inicio} - {ano_fim}"
+    }
 
 
 @app.get("/destaque/{album_nome}")
