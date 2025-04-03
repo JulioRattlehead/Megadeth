@@ -49,7 +49,7 @@ async def read_musicas(album: str):
 
 @app.get("/albuns/")
 async def filter_albums_by_year(ano: int = Query(...,
-                                               description="Ano de lançamento do álbum")):
+                                                 description="Ano de lançamento do álbum")):
     """Filtra álbuns por ano de lançamento."""
     filtered_albums = [
         album for album in discografia_megadeth if album["ano"] == ano
@@ -61,7 +61,7 @@ async def filter_albums_by_year(ano: int = Query(...,
 
 @app.get("/busca/")
 async def search_albums_by_keyword(keyword: str = Query(...,
-                                                    description="Palavra-chave no título do álbum")):
+                                                        description="Palavra-chave no título do álbum")):
     """Busca álbuns por palavra-chave no título."""
     filtered_albums = [
         album for album in discografia_megadeth
@@ -103,8 +103,8 @@ async def get_album_details(album_nome: str):
 
 @app.get("/albuns_por_intervalo/")
 async def get_albums_by_year_range(
-    ano_inicio: int = Query(..., description="Ano de início do intervalo"),
-    ano_fim: int = Query(..., description="Ano de fim do intervalo"),
+        ano_inicio: int = Query(..., description="Ano de início do intervalo"),
+        ano_fim: int = Query(..., description="Ano de fim do intervalo"),
 ):
     """Retorna álbuns lançados em um intervalo de anos."""
     filtered_albums = [
