@@ -1,0 +1,29 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Compactar projeto em ZIP
+        run: |
+          zip -r projetozipado.zip . -x "venv/*" ".git/*" ".github/*"
+
+      - name: Upload do artefato (ZIP)
+        uses: actions/upload-artifact@v4
+        with:
+          name: projeto-compactado
+          path: projetozipado.zip
+          
