@@ -27,14 +27,14 @@ jobs:
           name: projeto-compactado
           path: projetozipado.zip
 
-
   deploy:
     runs-on: ubuntu-latest
     needs: deliver
     steps:
-      - uses: actions/download-artifact@v5
+      - name: Baixar artefato (ZIP)
+        uses: actions/download-artifact@v4
         with:
-          name: projetozipado.zip
-      - name: Display structure of download files
-        run: ls -R
+          name: projeto-compactado  # Nome correto do artefato gerado
 
+      - name: Exibir estrutura dos arquivos baixados
+        run: ls -R
