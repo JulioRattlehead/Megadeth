@@ -89,4 +89,3 @@ def test_get_destaque_album():
     response = client.get("/destaque/Rust%20in%20Peace")
     assert response.status_code == 200
     assert response.json()["destaque"] == "Holy Wars... The Punishment Due"
-    
