@@ -61,7 +61,7 @@ async def filter_albums_by_year(ano: int = Query(...,
 
 @app.get("/busca/")
 async def search_albums_by_keyword(keyword: str = Query(...,
-                                                        description="Palavra-chave no título do álbum")):
+                                                        description="Palavra no título do álbum")):
     """Busca álbuns por palavra-chave no título."""
     filtered_albums = [
         album for album in discografia_megadeth
