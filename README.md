@@ -1,19 +1,18 @@
-# 🎸 Projeto Megadeth - API REST com FastAPI
+# 🎸 Megadeth App - Projeto DevOps
 
-Este projeto consiste em uma API REST criada com [FastAPI](https://fastapi.tiangolo.com/), simulando dados de álbuns da banda Megadeth. Ele também conta com um pipeline de integração e entrega contínua configurado com **GitHub Actions**, além de testes automatizados com **pytest** e cobertura de código com **coverage**.
-
----
-
-## 🚀 Tecnologias Utilizadas
-
-- Python 3.9
-- FastAPI
-- Pytest
-- Coverage
-- GitHub Actions
-- Pylint
+Este repositório contém a aplicação desenvolvida como parte do trabalho da disciplina de DevOps, com foco em containerização usando **Docker** e automação de deploy via **GitHub Actions**.
 
 ---
 
-## 📁 Estrutura do Projeto
+## 🚀 Funcionalidades
+
+- Container Docker configurado com `Dockerfile`
+- Dependências gerenciadas via `requirements.txt`
+- Pipeline de CI/CD usando GitHub Actions
+- Login automático no Docker Hub e push da imagem
+- Aplicação acessível via `localhost` após deploy
+
+---
+
+## 📦 Estrutura do Projeto
 
