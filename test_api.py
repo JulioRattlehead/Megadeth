@@ -22,3 +22,18 @@ def test_get_album_not_found():
     response = client.get("/album/Inexistente")
     assert response.status_code == 200
     assert "erro" in response.json()
+
+def test_get_albuns_format():
+    response = client.get("/albuns")
+    assert response.status_code == 200
+    albuns_data = response.json()
+
+    # Verifica se a resposta é uma lista
+    assert isinstance(albuns_data, list)
+
+    # Verifica se cada item na lista tem as chaves esperadas
+    for album in albuns_data:
+        assert "album" in album
+        assert "ano" in album
+        assert "destaque" in album
+
